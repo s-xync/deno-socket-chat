@@ -1,9 +1,4 @@
-import {
-  WebSocket,
-  isWebSocketCloseEvent,
-} from "https://deno.land/std/ws/mod.ts";
-import { v4 } from "https://deno.land/std/uuid/mod.ts";
-import { camelCase } from "https://cdn.pika.dev/camel-case@^4.1.1";
+import { WebSocket, isWebSocketCloseEvent, uuidv4, camelCase } from "./deps.ts";
 
 const users = new Map<string, WebSocket>();
 
@@ -15,7 +10,7 @@ function broadcast(message: string, senderId?: string): void {
 }
 
 export async function chat(ws: WebSocket): Promise<void> {
-  const userId = v4.generate();
+  const userId = uuidv4.generate();
 
   // register user connection
   users.set(userId, ws);
