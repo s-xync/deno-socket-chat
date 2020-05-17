@@ -7,3 +7,4 @@ export {
   acceptable,
 } from "https://deno.land/std/ws/mod.ts";
 export { listenAndServe } from "https://deno.land/std/http/server.ts";
+export { assertStrictEq } from "https://deno.land/std/testing/asserts.ts";

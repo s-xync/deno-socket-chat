@@ -1,4 +1,5 @@
-import { WebSocket, isWebSocketCloseEvent, uuidv4, camelCase } from "./deps.ts";
+import { WebSocket, isWebSocketCloseEvent, uuidv4 } from "./deps.ts";
+import { camelize } from "./camelize.ts";
 
 const users = new Map<string, WebSocket>();
 
@@ -18,7 +19,7 @@ export async function chat(ws: WebSocket): Promise<void> {
 
   // Wait for new messages
   for await (const event of ws) {
-    const message = camelCase(typeof event === "string" ? event : "");
+    const message = camelize(typeof event === "string" ? event : "");
 
     broadcast(message, userId);
 
