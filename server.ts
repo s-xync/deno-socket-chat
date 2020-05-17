@@ -1,4 +1,6 @@
 import { listenAndServe } from "https://deno.land/std/http/server.ts";
+import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
+import { chat } from "./chat.ts";
 
 const port = 3000;
 
@@ -11,6 +13,18 @@ listenAndServe({ port }, async (req) => {
       }),
       body: await Deno.open("./index.html"),
     });
+  }
+
+  // websocket endpoint
+  if (req.method === "GET" && req.url === "/ws") {
+    if (acceptable(req)) {
+      acceptWebSocket({
+        conn: req.conn,
+        bufReader: req.r,
+        bufWriter: req.w,
+        headers: req.headers,
+      }).then(chat);
+    }
   }
 });
 
